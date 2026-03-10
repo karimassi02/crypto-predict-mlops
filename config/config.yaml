@@ -1,0 +1,45 @@
+# ============================================
+# Crypto Predict MLOps - Configuration
+# ============================================
+
+project:
+  name: "crypto-predict-mlops"
+  version: "0.1.0"
+
+# --- Data Collection ---
+collection:
+  cryptocurrencies:
+    - id: "bitcoin"
+      symbol: "BTC"
+    - id: "ethereum"
+      symbol: "ETH"
+    - id: "solana"
+      symbol: "SOL"
+    - id: "binancecoin"
+      symbol: "BNB"
+    - id: "cardano"
+      symbol: "ADA"
+
+  coingecko:
+    base_url: "https://api.coingecko.com/api/v3"
+    currency: "usd"
+    history_days: 365
+    rate_limit_seconds: 2
+
+  fear_greed:
+    base_url: "https://api.alternative.me/fng/"
+    history_days: 365
+
+  scraping:
+    user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    rate_limit_seconds: 3
+
+# --- Storage ---
+storage:
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+
+# --- Logging ---
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

@@ -12,14 +12,15 @@ __pycache__/
 dist/
 build/
 
-# Data files
-data/raw/
-data/processed/
+# Data files (keep directory structure via .gitkeep)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
 
-# Models
-models/*.joblib
-models/*.pt
-models/*.pkl
+# Models (keep directory structure via .gitkeep)
+models/*
+!models/.gitkeep
 
 # MLflow
 mlruns/
