@@ -13,3 +13,10 @@ pymongo>=4.6.0
 # --- Phase 3: ETL & Transformation ---
 numpy>=1.26.0
 apache-airflow>=2.9.0
+
+# --- Phase 5: Analyse & Visualisation ---
+streamlit>=1.38.0
+plotly>=5.22.0
+scipy>=1.13.0
+seaborn>=0.13.0
+matplotlib>=3.9.0

@@ -30,6 +30,9 @@ mlflow.db
 .vscode/
 .idea/
 
+# Claude Code
+.claude/
+
 # RNCP certification resources (local only)
 RNCP ressources/
 
