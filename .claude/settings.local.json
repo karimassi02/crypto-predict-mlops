@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"C:\\\\Users\\\\KAS\\\\Documents\\\\Perso\\\\crypto-predict-mlops\" && ./venv/Scripts/pip install psycopg2-binary pymongo 2>&1 | tail -5)"
+    ]
+  }
+}

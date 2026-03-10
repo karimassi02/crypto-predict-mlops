@@ -39,6 +39,17 @@ storage:
   raw_data_dir: "data/raw"
   processed_data_dir: "data/processed"
 
+  postgres:
+    tables:
+      market_data: "market_data"
+      fear_greed: "fear_greed_index"
+      cryptocurrencies: "cryptocurrencies"
+
+  mongodb:
+    collections:
+      news: "news_articles"
+      raw_responses: "raw_responses"
+
 # --- Logging ---
 logging:
   level: "INFO"
