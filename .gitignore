@@ -1,0 +1,43 @@
+# Virtual environments
+venv/
+.venv/
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Data files
+data/raw/
+data/processed/
+
+# Models
+models/*.joblib
+models/*.pt
+models/*.pkl
+
+# MLflow
+mlruns/
+mlflow.db
+
+# IDE
+.vscode/
+.idea/
+
+# RNCP certification resources (local only)
+RNCP ressources/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Docker
+docker/volumes/
