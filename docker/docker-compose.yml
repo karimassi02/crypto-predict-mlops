@@ -12,7 +12,7 @@ x-airflow-common: &airflow-common
     POSTGRES_DB: ${POSTGRES_DB:-crypto_predict}
     POSTGRES_USER: ${POSTGRES_USER:-admin}
     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-    MONGO_URI: mongodb://mongodb:27017
+    MONGO_URI: mongodb://crypto_app:crypto_app_pwd@mongodb:27017/crypto_predict
     MONGO_DB: ${MONGO_DB:-crypto_predict}
     COINGECKO_API_KEY: ${COINGECKO_API_KEY:-}
   volumes:
@@ -21,6 +21,8 @@ x-airflow-common: &airflow-common
     - ../config:/opt/airflow/config
     - ../data:/opt/airflow/data
     - airflow_logs:/opt/airflow/logs
+  networks:
+    - crypto_network
   depends_on:
     postgres:
       condition: service_healthy
@@ -40,6 +42,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - crypto_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-crypto_predict}"]
       interval: 10s
@@ -51,12 +55,17 @@ services:
     container_name: crypto_mongodb
     environment:
       MONGO_INITDB_DATABASE: ${MONGO_DB:-crypto_predict}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-mongo_admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-mongo_admin_pwd}
     ports:
       - "${MONGO_PORT:-27017}:27017"
     volumes:
       - mongo_data:/data/db
+      - ./init-scripts/03_mongo_init.js:/docker-entrypoint-initdb.d/01_mongo_init.js:ro
+    networks:
+      - crypto_network
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongosh", "-u", "${MONGO_ROOT_USER:-mongo_admin}", "-p", "${MONGO_ROOT_PASSWORD:-mongo_admin_pwd}", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -70,8 +79,8 @@ services:
       - |
         airflow db migrate
         airflow users create \
-          --username admin \
-          --password admin \
+          --username ${AIRFLOW_ADMIN_USER:-admin} \
+          --password ${AIRFLOW_ADMIN_PASSWORD:-admin} \
           --firstname Admin \
           --lastname User \
           --role Admin \
@@ -97,6 +106,10 @@ services:
       airflow-init:
         condition: service_completed_successfully
     restart: unless-stopped
+
+networks:
+  crypto_network:
+    driver: bridge
 
 volumes:
   postgres_data:

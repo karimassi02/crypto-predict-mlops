@@ -9,6 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from src.utils.config import ROOT_DIR, load_config
+from src.utils.security import sanitize_text, sanitize_url
 
 logger = logging.getLogger(__name__)
 
@@ -43,10 +44,15 @@ class CryptoNewsScraper:
 
         articles = []
         for tag in soup.find_all("a", class_="post-card-inline__title-link"):
-            title = tag.get_text(strip=True)
+            title = sanitize_text(tag.get_text(strip=True))
             link = tag.get("href", "")
             if not link.startswith("http"):
                 link = f"https://cointelegraph.com{link}"
+            try:
+                link = sanitize_url(link)
+            except ValueError:
+                logger.warning("Skipping invalid URL: %s", link)
+                continue
             articles.append({"title": title, "url": link})
 
         time.sleep(self.rate_limit)
