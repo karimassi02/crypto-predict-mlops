@@ -1,4 +1,31 @@
-version: "3.9"
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.10.5-python3.12
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/airflow
+    AIRFLOW__CORE__FERNET_KEY: ""
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    # App env vars
+    POSTGRES_HOST: postgres
+    POSTGRES_PORT: "5432"
+    POSTGRES_DB: ${POSTGRES_DB:-crypto_predict}
+    POSTGRES_USER: ${POSTGRES_USER:-admin}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+    MONGO_URI: mongodb://mongodb:27017
+    MONGO_DB: ${MONGO_DB:-crypto_predict}
+    COINGECKO_API_KEY: ${COINGECKO_API_KEY:-}
+  volumes:
+    - ../dags:/opt/airflow/dags
+    - ../src:/opt/airflow/src
+    - ../config:/opt/airflow/config
+    - ../data:/opt/airflow/data
+    - airflow_logs:/opt/airflow/logs
+  depends_on:
+    postgres:
+      condition: service_healthy
+    mongodb:
+      condition: service_healthy
 
 services:
   postgres:
@@ -34,6 +61,44 @@ services:
       timeout: 5s
       retries: 5
 
+  airflow-init:
+    <<: *airflow-common
+    container_name: crypto_airflow_init
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        airflow db migrate
+        airflow users create \
+          --username admin \
+          --password admin \
+          --firstname Admin \
+          --lastname User \
+          --role Admin \
+          --email admin@example.com || true
+    restart: "no"
+
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: crypto_airflow_webserver
+    command: webserver
+    ports:
+      - "8080:8080"
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: crypto_airflow_scheduler
+    command: scheduler
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   mongo_data:
+  airflow_logs:

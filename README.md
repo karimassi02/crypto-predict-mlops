@@ -58,7 +58,7 @@ Developper un systeme end-to-end de prediction des prix crypto :
 |-------|------------|--------|
 | Phase 1 | Collecte de donnees (API, scraping, automatisation) | Termine |
 | Phase 2 | Stockage (PostgreSQL + MongoDB) | Termine |
-| Phase 3 | Transformation & ETL (Airflow) | A faire |
+| Phase 3 | Transformation & ETL (Airflow) | Termine |
 | Phase 4 | Securite des donnees | A faire |
 | Phase 5 | Analyse & Visualisation (Dashboard) | A faire |
 | Phase 6 | Modeles ML & deploiement (Bloc 5) | A faire |

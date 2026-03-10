@@ -9,3 +9,7 @@ pandas>=2.2.0
 # --- Phase 2: Storage ---
 psycopg2-binary>=2.9.9
 pymongo>=4.6.0
+
+# --- Phase 3: ETL & Transformation ---
+numpy>=1.26.0
+apache-airflow>=2.9.0
