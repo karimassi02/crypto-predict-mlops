@@ -237,6 +237,27 @@ def main():
         optimized_trainer.get_comparison().to_csv(comparison_path, index=False)
         logger.info("Comparaison sauvegardee : %s", comparison_path)
 
+    # 6. Sauvegarde de tous les modeles
+    logger.info("\n" + "=" * 60)
+    logger.info("SAUVEGARDE DES MODELES")
+    logger.info("=" * 60)
+
+    from src.models.model_registry import ModelRegistry
+    registry = ModelRegistry()
+
+    final_trainer = optimized_trainer if not args.skip_optimization else baseline_trainer
+    crypto_name = args.crypto or "all"
+
+    for name, result in final_trainer.results.items():
+        if result.model is not None:
+            model_dir = registry.save(result, crypto=crypto_name)
+            logger.info("Sauvegarde %s -> %s", name, model_dir)
+
+    # Sauvegarder aussi avec MLflow
+    best = final_trainer.get_best_model("f1")
+    run_id = registry.save_with_mlflow(best, crypto=crypto_name)
+    logger.info("Meilleur modele enregistre dans MLflow (run_id=%s)", run_id)
+
     logger.info("\nPipeline ML termine avec succes !")
 
 
