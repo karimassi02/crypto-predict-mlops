@@ -168,8 +168,10 @@ class FeatureEngineer:
         df["future_return"] = df["price"].pct_change(self.target_horizon).shift(
             -self.target_horizon
         )
-        # Variable cible binaire : 1 = hausse, 0 = baisse
-        df["target"] = (df["future_return"] > 0).astype(int)
+        # Variable cible binaire : 1 = hausse, 0 = baisse (NaN preserve)
+        df["target"] = df["future_return"].apply(
+            lambda x: int(x > 0) if pd.notna(x) else np.nan
+        )
 
         # Supprimer la colonne intermediaire
         df = df.drop(columns=["future_return"])
