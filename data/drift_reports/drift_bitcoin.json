@@ -1,0 +1,644 @@
+{
+  "metrics": [
+    {
+      "id": "15e89f895b482f9b84ba7274ed18a106",
+      "metric_name": "DriftedColumnsCount(drift_share=0.5)",
+      "config": {
+        "type": "evidently:metric_v2:DriftedColumnsCount",
+        "drift_share": 0.5
+      },
+      "value": {
+        "count": 34.0,
+        "share": 0.5964912280701754
+      }
+    },
+    {
+      "id": "e230aac755523537a503a7fec93a72e6",
+      "metric_name": "ValueDrift(column=macd_hist,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "macd_hist",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.0007605204697739202
+    },
+    {
+      "id": "cd55e11c48d0bc3e74fa2f0bf2b588fe",
+      "metric_name": "ValueDrift(column=volume_change_1d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volume_change_1d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.846043133369446
+    },
+    {
+      "id": "b747ffacb2967164e3b59744312fa4e2",
+      "metric_name": "ValueDrift(column=bb_position,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "bb_position",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.0004954649678978674
+    },
+    {
+      "id": "2a8479f6ff85cea3a8f5b1d0d4a946d5",
+      "metric_name": "ValueDrift(column=price_change_2d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "price_change_2d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.10327361149575671
+    },
+    {
+      "id": "2608e8856961a861c800879568608783",
+      "metric_name": "ValueDrift(column=bb_width,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "bb_width",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 6.217651159764085e-05
+    },
+    {
+      "id": "8aba2b672313cff1a2a26f88c374f9d5",
+      "metric_name": "ValueDrift(column=cum_return_14d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "cum_return_14d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.005435565337372794
+    },
+    {
+      "id": "0d10d446450386d7117c23a6a0f29dce",
+      "metric_name": "ValueDrift(column=rsi_14,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "rsi_14",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.3719108956655234e-07
+    },
+    {
+      "id": "f532386ba9159b0356e809f3cc039a2e",
+      "metric_name": "ValueDrift(column=bb_lower,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "bb_lower",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 2.226284082069891e-31
+    },
+    {
+      "id": "876a8cc526e6eea5dee658bbd16e8590",
+      "metric_name": "ValueDrift(column=volume_change_7d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volume_change_7d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.32197273494471906
+    },
+    {
+      "id": "44b577122cc2341db5932164514bda80",
+      "metric_name": "ValueDrift(column=month_cos,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "month_cos",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 3.6581931510763875e-22
+    },
+    {
+      "id": "d5ae38fcee62da732da77ea511169d72",
+      "metric_name": "ValueDrift(column=return_lag_2,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "return_lag_2",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.2115504570777749
+    },
+    {
+      "id": "6d3a5807e5fdfc05e56bf149f11e6094",
+      "metric_name": "ValueDrift(column=sma_30,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "sma_30",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 2.1000429555836785e-32
+    },
+    {
+      "id": "53999b3dd5a0754e217f42f91aa74ba3",
+      "metric_name": "ValueDrift(column=open,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "open",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.330521846076762e-24
+    },
+    {
+      "id": "6d8f460fd0bbddc699433e2654117209",
+      "metric_name": "ValueDrift(column=fg_change,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "fg_change",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.4660052844823777
+    },
+    {
+      "id": "8de798c76099065f2a086d1d5b7f5740",
+      "metric_name": "ValueDrift(column=macd,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "macd",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.8724410213609766e-07
+    },
+    {
+      "id": "4ef9699650a7568290b1b3a0bb758d5c",
+      "metric_name": "ValueDrift(column=stoch_d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "stoch_d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.00016114984517062763
+    },
+    {
+      "id": "b0d13e4faa47f0f1e1da645d33e9d9c2",
+      "metric_name": "ValueDrift(column=volume_change_3d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volume_change_3d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.5067214435817081
+    },
+    {
+      "id": "c64a9c6b74a6b6b4f5159206dd3c9056",
+      "metric_name": "ValueDrift(column=macd_signal,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "macd_signal",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 2.7595676684627966e-08
+    },
+    {
+      "id": "be50027d24c0df44196f4fe4095ac233",
+      "metric_name": "ValueDrift(column=cum_return_5d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "cum_return_5d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.04553052863083894
+    },
+    {
+      "id": "1358ee3ea052bbf5500ada43d67da668",
+      "metric_name": "ValueDrift(column=log_return,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "log_return",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.2360223566872677
+    },
+    {
+      "id": "81819fc6a69cc6be1a210d03fb79741c",
+      "metric_name": "ValueDrift(column=volume_change_5d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volume_change_5d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.8078450944577216
+    },
+    {
+      "id": "0501170bea2d8c109692e8de32f4e6f9",
+      "metric_name": "ValueDrift(column=price,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "price",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 2.5344215098615693e-24
+    },
+    {
+      "id": "73fd795e3b6111fa4a8eed7a81afcd4e",
+      "metric_name": "ValueDrift(column=market_cap,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "market_cap",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 4.802655430172863e-24
+    },
+    {
+      "id": "e3cb7c472daa20067fd90a12e9cb06ee",
+      "metric_name": "ValueDrift(column=atr_14,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "atr_14",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.04553052863083894
+    },
+    {
+      "id": "56c664808f8fec6109e4360474b3f0b4",
+      "metric_name": "ValueDrift(column=volume_change_2d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volume_change_2d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.6362539471299561
+    },
+    {
+      "id": "7725b4933d45549c4aa1528fb9ff1168",
+      "metric_name": "ValueDrift(column=sma_14,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "sma_14",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.8634876858915585e-28
+    },
+    {
+      "id": "a45c1076f672a38a1e8fb7e918688fa3",
+      "metric_name": "ValueDrift(column=price_change_5d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "price_change_5d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.029098633763902537
+    },
+    {
+      "id": "e058b81ec71f086f6c6df32d292e61ca",
+      "metric_name": "ValueDrift(column=bb_middle,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "bb_middle",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 2.826182263089844e-35
+    },
+    {
+      "id": "511a61004d9254f59bc2d94979c91a4c",
+      "metric_name": "ValueDrift(column=cum_return_7d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "cum_return_7d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.060502338926730535
+    },
+    {
+      "id": "44bbcaad675215c0b37f9689b1ce9fd2",
+      "metric_name": "ValueDrift(column=fg_sma_7,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "fg_sma_7",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.9993461897943263e-22
+    },
+    {
+      "id": "79f2a1d02a5410b37034e98c6e46399e",
+      "metric_name": "ValueDrift(column=volume_sma_20,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volume_sma_20",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 2.547395741981742e-07
+    },
+    {
+      "id": "6777bc0a35ee6fd0cb934e26e3ef3864",
+      "metric_name": "ValueDrift(column=price_change_7d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "price_change_7d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.060502338926730535
+    },
+    {
+      "id": "a75466ed6083eeaecf555ac087639270",
+      "metric_name": "ValueDrift(column=total_volume,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "total_volume",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.0025631903955912836
+    },
+    {
+      "id": "c410b94061b98fb31a2433e51bd823d6",
+      "metric_name": "ValueDrift(column=return_lag_1,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "return_lag_1",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.2360223566872677
+    },
+    {
+      "id": "6906a8b61ceed8b2620bfccd24d47fae",
+      "metric_name": "ValueDrift(column=close,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "close",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.330521846076762e-24
+    },
+    {
+      "id": "55f69d82798367c4db2a33f64c80537c",
+      "metric_name": "ValueDrift(column=return_lag_7,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "return_lag_7",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.5067214435817081
+    },
+    {
+      "id": "4763753d88a78f39d781dba043573d38",
+      "metric_name": "ValueDrift(column=price_change_1d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "price_change_1d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.2360223566872677
+    },
+    {
+      "id": "50163181790ed8ace213a6b94b478eb5",
+      "metric_name": "ValueDrift(column=price_change_3d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "price_change_3d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.03933002840532129
+    },
+    {
+      "id": "fca57f67872cba63886268f023580981",
+      "metric_name": "ValueDrift(column=cum_return_3d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "cum_return_3d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.03933002840532129
+    },
+    {
+      "id": "23e05be84de5593867712c433bbf92ec",
+      "metric_name": "ValueDrift(column=day_of_month,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "day_of_month",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.5489070442229169
+    },
+    {
+      "id": "c29ab71cb3ced377b4fd7a11d7e11e30",
+      "metric_name": "ValueDrift(column=sma_7,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "sma_7",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 3.1636337507441993e-27
+    },
+    {
+      "id": "afd2aaaaf544336aaaf93e8c312f9fe7",
+      "metric_name": "ValueDrift(column=fg_value,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "fg_value",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.2070891149089298e-21
+    },
+    {
+      "id": "16fe5e4458da879fa56c6dd2b60e5be8",
+      "metric_name": "ValueDrift(column=bb_upper,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "bb_upper",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.4307403688654873e-37
+    },
+    {
+      "id": "5c881eb241d0fafd7878e0b6f1eefc6f",
+      "metric_name": "ValueDrift(column=return_lag_5,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "return_lag_5",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.35489879944177743
+    },
+    {
+      "id": "6d8f3245788688f9072ed71df6b653c1",
+      "metric_name": "ValueDrift(column=day_sin,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "day_sin",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.0
+    },
+    {
+      "id": "0adb4ffec92291820a85f7c2fcc5ac49",
+      "metric_name": "ValueDrift(column=day_cos,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "day_cos",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.9999999999365035
+    },
+    {
+      "id": "27e98f3118ab47a7b0d2e06760ab8891",
+      "metric_name": "ValueDrift(column=volatility_7d,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volatility_7d",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.0006147563853736195
+    },
+    {
+      "id": "d296e07bf136e4c1b221e75a007cc4b0",
+      "metric_name": "ValueDrift(column=volume_ratio,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "volume_ratio",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.6362539471299561
+    },
+    {
+      "id": "d953eb185f067d38e8734fd06ebf3c1a",
+      "metric_name": "ValueDrift(column=return_lag_3,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "return_lag_3",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.32197273494471906
+    },
+    {
+      "id": "78a3b88e00c5a3dd1bd5469ada26768d",
+      "metric_name": "ValueDrift(column=high,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "high",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 9.585600190761024e-26
+    },
+    {
+      "id": "5c7c0a7120bd381ee2395d5559be4849",
+      "metric_name": "ValueDrift(column=month_sin,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "month_sin",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 3.6096080719046933e-25
+    },
+    {
+      "id": "165dbe439eb8da6b33e5eb24eceb884d",
+      "metric_name": "ValueDrift(column=daily_return,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "daily_return",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 0.2360223566872677
+    },
+    {
+      "id": "95cda3c54cd3b18753c790ef552caf20",
+      "metric_name": "ValueDrift(column=low,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "low",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 1.330521846076762e-24
+    },
+    {
+      "id": "01d70ce11bea042b1ffa19e8b4fc5da5",
+      "metric_name": "ValueDrift(column=stoch_k,method=K-S p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "stoch_k",
+        "method": "K-S p_value",
+        "threshold": 0.05
+      },
+      "value": 8.002205790460572e-06
+    },
+    {
+      "id": "bb172f3d97e12dbbb2c77f5e8a622a5f",
+      "metric_name": "ValueDrift(column=month,method=chi-square p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "month",
+        "method": "chi-square p_value",
+        "threshold": 0.05
+      },
+      "value": 0.0
+    },
+    {
+      "id": "791252835952e68c135899e6207ec363",
+      "metric_name": "ValueDrift(column=day_of_week,method=chi-square p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "day_of_week",
+        "method": "chi-square p_value",
+        "threshold": 0.05
+      },
+      "value": 0.9891206702032759
+    },
+    {
+      "id": "775d58826c83ad4993f890c6b77b02a9",
+      "metric_name": "ValueDrift(column=is_weekend,method=Z-test p_value,threshold=0.05)",
+      "config": {
+        "type": "evidently:metric_v2:ValueDrift",
+        "column": "is_weekend",
+        "method": "Z-test p_value",
+        "threshold": 0.05
+      },
+      "value": 0.9537644209291676
+    }
+  ],
+  "tests": []
+}
