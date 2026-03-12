@@ -15,7 +15,6 @@ from pathlib import Path
 
 import joblib
 import mlflow
-import torch
 
 from src.models.trainer import TrainingResult
 
@@ -109,6 +108,7 @@ class ModelRegistry:
         model_dir.mkdir(parents=True, exist_ok=True)
 
         # Sauvegarder le modele PyTorch (state_dict pour portabilite)
+        import torch
         model_path = model_dir / "model.pt"
         torch.save({
             "model_state_dict": result.model.state_dict(),
@@ -227,6 +227,7 @@ class ModelRegistry:
         Returns:
             Dictionnaire avec le modele, le scaler et les metadonnees.
         """
+        import torch
         from src.models.trainer import LSTMModel
 
         model_dir = Path(model_dir)
