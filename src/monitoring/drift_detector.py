@@ -136,21 +136,31 @@ class DriftDetector:
                 n_total = result.get("n_columns", len(feature_columns))
                 drift_ratio = n_drifted / n_total if n_total > 0 else 0
 
-        # Si pas de metriques globales trouvees, calculer manuellement
-        if not feature_details:
+        # Verifier si les metriques globales ont ete trouvees dans le rapport
+        global_metrics_found = "drift_ratio" in locals()
+
+        # Si ni metriques globales ni metriques par feature : fallback manuel
+        if not global_metrics_found and not feature_details:
             n_drifted = 0
             n_total = len(feature_columns)
-            drift_ratio = 0
+            drift_ratio = 0.0
             dataset_drift = False
 
+        # Si seulement des metriques par feature (pas de table globale) : calculer
+        if not global_metrics_found and feature_details:
+            n_drifted = len(drifted_features)
+            n_total = len(feature_columns)
+            drift_ratio = n_drifted / max(n_total, 1)
+            dataset_drift = drift_ratio > self.drift_threshold
+
         drift_results = {
-            "dataset_drift": dataset_drift if "dataset_drift" in dir() else drift_ratio > self.drift_threshold,
-            "drift_ratio": drift_ratio if "drift_ratio" in dir() else len(drifted_features) / max(len(feature_columns), 1),
-            "n_drifted_features": n_drifted if "n_drifted" in dir() else len(drifted_features),
-            "n_total_features": n_total if "n_total" in dir() else len(feature_columns),
+            "dataset_drift": dataset_drift,
+            "drift_ratio": drift_ratio,
+            "n_drifted_features": n_drifted,
+            "n_total_features": n_total,
             "drifted_features": drifted_features,
             "feature_details": feature_details,
-            "alert": drift_ratio > self.drift_threshold if "drift_ratio" in dir() else len(drifted_features) / max(len(feature_columns), 1) > self.drift_threshold,
+            "alert": drift_ratio > self.drift_threshold,
             "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 

@@ -34,6 +34,8 @@ from src.analysis.statistics import (
     test_correlation,
     test_normality,
 )
+from src.features.feature_engineering import FeatureEngineer
+from src.models.model_registry import ModelRegistry
 from src.utils.config import ROOT_DIR, load_config
 
 # --- Page config ---
@@ -294,6 +296,200 @@ def page_statistics(df: pd.DataFrame):
         )
 
 
+@st.cache_resource
+def load_model_registry() -> ModelRegistry:
+    """Charge le model registry (mis en cache)."""
+    return ModelRegistry()
+
+
+def page_predictions(market_df: pd.DataFrame):
+    """Page 5: Predictions ML — tendances hausse/baisse par modele.
+
+    Charge les modeles sauvegardes depuis le registry local et affiche
+    les predictions pour chaque crypto disponible.
+
+    Competences RNCP :
+    - C5.3.1 : Versioning et serialisation des modeles
+    - C5.3.2 : Deploiement des modeles via API/UI
+    """
+    st.header("Predictions ML")
+
+    # --- Chargement du registry ---
+    try:
+        registry = load_model_registry()
+        models_meta = registry.list_models()
+    except Exception as e:
+        st.error(f"Impossible de charger le registry : {e}")
+        return
+
+    if not models_meta:
+        st.warning(
+            "Aucun modele entraine. Lancez d'abord `python scripts/train_models.py`."
+        )
+        return
+
+    # --- Selections utilisateur ---
+    col_sel1, col_sel2 = st.columns(2)
+
+    available_models = sorted({m["model_name"] for m in models_meta
+                                if m["model_name"] != "lstm"})
+    available_cryptos = sorted({m["crypto"] for m in models_meta
+                                 if m["model_name"] != "lstm"})
+
+    with col_sel1:
+        selected_model = st.selectbox("Modele", available_models)
+    with col_sel2:
+        selected_crypto = st.selectbox("Crypto", available_cryptos)
+
+    st.divider()
+
+    # --- Recherche du meilleur modele matching ---
+    model_dir = registry.get_latest_model(
+        model_name=selected_model, crypto=selected_crypto
+    )
+    if model_dir is None:
+        st.warning(f"Pas de modele '{selected_model}' pour '{selected_crypto}'.")
+        return
+
+    try:
+        loaded = registry.load(model_dir)
+    except Exception as e:
+        st.error(f"Erreur lors du chargement du modele : {e}")
+        return
+
+    model = loaded["model"]
+    scaler = loaded["scaler"]
+    metadata = loaded["metadata"]
+    feature_names = metadata.get("feature_names", [])
+
+    # --- Metriques du modele ---
+    st.subheader("Performances du modele")
+    metrics = metadata.get("metrics", {})
+    if metrics:
+        metric_cols = st.columns(min(len(metrics), 4))
+        for i, (name, value) in enumerate(metrics.items()):
+            with metric_cols[i % len(metric_cols)]:
+                label = name.replace("_", " ").title()
+                st.metric(label, f"{value:.3f}" if isinstance(value, float) else str(value))
+    else:
+        st.info("Pas de metriques disponibles.")
+
+    st.caption(
+        f"Modele entraine le {metadata.get('timestamp', '?')} "
+        f"— {len(feature_names)} features"
+    )
+
+    st.divider()
+
+    # --- Prediction sur les dernieres donnees ---
+    st.subheader("Prediction en temps reel")
+
+    if market_df.empty:
+        st.warning("Donnees de marche non disponibles.")
+        return
+
+    crypto_df = market_df[market_df["coingecko_id"] == selected_crypto].copy()
+    if crypto_df.empty:
+        # Essayer avec crypto_id
+        crypto_df = market_df[market_df.get("crypto_id", pd.Series()) == selected_crypto].copy()
+
+    if crypto_df.empty:
+        st.warning(f"Pas de donnees pour '{selected_crypto}' dans le fichier traite.")
+        return
+
+    try:
+        engineer = FeatureEngineer(target_horizon=1)
+        df_features = engineer.build_features(
+            crypto_df.sort_values("date").reset_index(drop=True),
+            crypto_id=selected_crypto
+        )
+
+        available_feat = [f for f in feature_names if f in df_features.columns]
+        if not available_feat:
+            st.error("Features du modele incompatibles avec les donnees actuelles.")
+            return
+
+        X_last = df_features[available_feat].iloc[[-1]].copy()
+        X_last = X_last.replace([np.inf, -np.inf], np.nan).fillna(X_last.median())
+
+        X_input = scaler.transform(X_last) if scaler is not None else X_last.values
+        proba = model.predict_proba(X_input)[0]
+        proba_hausse = float(proba[1])
+        prediction = "hausse" if proba_hausse > 0.5 else "baisse"
+        confidence = proba_hausse if proba_hausse > 0.5 else 1 - proba_hausse
+
+    except Exception as e:
+        st.error(f"Erreur lors de la prediction : {e}")
+        return
+
+    # Affichage de la prediction
+    col_pred, col_conf = st.columns(2)
+    with col_pred:
+        color = "normal" if prediction == "hausse" else "inverse"
+        st.metric(
+            label=f"Tendance prevue — {selected_crypto.upper()}",
+            value=prediction.upper(),
+            delta=f"{'↑' if prediction == 'hausse' else '↓'} {confidence:.1%}",
+            delta_color=color,
+        )
+    with col_conf:
+        st.metric("Probabilite hausse", f"{proba_hausse:.1%}")
+
+    # Barre de confiance
+    st.progress(proba_hausse, text=f"Probabilite hausse : {proba_hausse:.1%}")
+
+    st.divider()
+
+    # --- Tableau de predictions pour toutes les cryptos disponibles ---
+    st.subheader("Predictions multi-cryptos")
+
+    rows = []
+    for crypto in available_cryptos:
+        dir_c = registry.get_latest_model(model_name=selected_model, crypto=crypto)
+        if dir_c is None:
+            continue
+        try:
+            loaded_c = registry.load(dir_c)
+            model_c = loaded_c["model"]
+            scaler_c = loaded_c["scaler"]
+            feats_c = loaded_c["metadata"].get("feature_names", [])
+            metrics_c = loaded_c["metadata"].get("metrics", {})
+
+            df_c = market_df[market_df["coingecko_id"] == crypto].copy()
+            if df_c.empty:
+                continue
+
+            eng_c = FeatureEngineer(target_horizon=1)
+            df_f_c = eng_c.build_features(
+                df_c.sort_values("date").reset_index(drop=True), crypto_id=crypto
+            )
+            avail_c = [f for f in feats_c if f in df_f_c.columns]
+            if not avail_c:
+                continue
+
+            X_c = df_f_c[avail_c].iloc[[-1]].copy()
+            X_c = X_c.replace([np.inf, -np.inf], np.nan).fillna(X_c.median())
+            X_in = scaler_c.transform(X_c) if scaler_c is not None else X_c.values
+            p = model_c.predict_proba(X_in)[0]
+            ph = float(p[1])
+
+            rows.append({
+                "Crypto": crypto.upper(),
+                "Tendance": "HAUSSE" if ph > 0.5 else "BAISSE",
+                "P(hausse)": f"{ph:.1%}",
+                "Accuracy": f"{metrics_c.get('accuracy', 0):.3f}",
+                "F1": f"{metrics_c.get('f1', 0):.3f}",
+            })
+        except Exception:
+            continue
+
+    if rows:
+        df_preds = pd.DataFrame(rows)
+        st.dataframe(df_preds, use_container_width=True, hide_index=True)
+    else:
+        st.info("Pas assez de modeles disponibles pour le tableau multi-cryptos.")
+
+
 def main():
     """Main dashboard entry point."""
     st.title("Crypto Predict MLOps — Dashboard")
@@ -301,7 +497,7 @@ def main():
     # Load data
     market_df, fg_df = load_data()
 
-    # Sidebar filters
+    # Sidebar filters (pas utilises sur la page Predictions)
     if not market_df.empty:
         selected_cryptos, date_range = sidebar_filters(market_df)
         filtered_df = filter_data(market_df, selected_cryptos, date_range)
@@ -312,7 +508,7 @@ def main():
     # Navigation
     page = st.sidebar.radio(
         "Navigation",
-        ["Vue d'ensemble", "Analyse Technique", "Sentiment", "Statistiques"],
+        ["Vue d'ensemble", "Analyse Technique", "Sentiment", "Statistiques", "Predictions ML"],
     )
 
     if page == "Vue d'ensemble":
@@ -323,6 +519,8 @@ def main():
         page_sentiment(filtered_df, fg_df)
     elif page == "Statistiques":
         page_statistics(filtered_df)
+    elif page == "Predictions ML":
+        page_predictions(market_df)
 
     # Footer
     st.sidebar.divider()
