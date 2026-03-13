@@ -107,6 +107,44 @@ services:
         condition: service_completed_successfully
     restart: unless-stopped
 
+  prediction-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: crypto_prediction_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../data/processed:/app/data/processed:ro
+      - ../models:/app/models:ro
+      - ../config:/app/config:ro
+    networks:
+      - crypto_network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  streamlit-dashboard:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.streamlit
+    container_name: crypto_streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../data/processed:/app/data/processed:ro
+      - ../models:/app/models:ro
+      - ../config:/app/config:ro
+    networks:
+      - crypto_network
+    depends_on:
+      prediction-api:
+        condition: service_healthy
+    restart: unless-stopped
+
 networks:
   crypto_network:
     driver: bridge
